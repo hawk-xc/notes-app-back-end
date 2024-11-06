@@ -2,6 +2,16 @@ const { addNoteHandler, getAllNotesHandler, getNoteByIdHandler, editNoteByIdHand
 
 const routes = [
   {
+    method: 'GET',
+    path: '/',
+    handrel: (request, h) => {
+      return h.response(JSON.stringify({
+        status: request.status,
+        message: 'success'
+      })).code(200);
+    }
+  },
+  {
     method: 'POST',
     path: '/notes',
     handler: addNoteHandler
