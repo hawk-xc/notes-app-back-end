@@ -4,7 +4,7 @@ const routes = [
   {
     method: 'GET',
     path: '/',
-    handrel: (request, h) => {
+    handler: (request, h) => {
       return h.response(JSON.stringify({
         status: request.status,
         message: 'success'
