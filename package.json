@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "run-prod": "npm run ./src/server.js",
     "run": "nodemon ./src/server.js",
     "lint": "eslint ./"
   },
