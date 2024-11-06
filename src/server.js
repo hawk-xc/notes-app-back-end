@@ -4,8 +4,8 @@ const routes = require('./routes');
 
 const init = async() => {
   const server = Hapi.server({
-    port: 3000,
-    host: 'localhost',
+    port: 5000,
+    host: process.env.NODE_ENV === 'development' ? 'localhost' : '0.0.0.0',
     routes: {
       cors: {
         origin: ['*']
@@ -15,7 +15,7 @@ const init = async() => {
 
   server.route(routes);
   await server.start();
-  console.log('server already running at http://localhost:3000');
+  console.log(`server already running at http://${process.env.NODE_ENV === 'development' ? 'localhost' : '0.0.0.0'}:5000`);
 };
 
 init();
