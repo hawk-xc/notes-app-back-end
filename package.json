@@ -5,6 +5,7 @@
   "scripts": {
     "run-prod": "node ./src/server.js",
     "run": "NODE_ENV=development node ./src/server.js",
+    "start": "nodemon ./src/server.js",
     "lint": "eslint ./"
   },
   "keywords": [],

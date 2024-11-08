@@ -2,36 +2,31 @@ const { nanoid } = require('nanoid');
 const notes = require('./notes');
 
 const addNoteHandler = (request, h) => {
-     const { title, body, tags } = request.payload;
+const { title, body, tags } = request.payload;
+const id = nanoid(16);
+const createdAt = new Date().toISOString();
+const updatedAt = createdAt;
+const newNote = {
+  title, tags, body, id, createdAt, updatedAt
+};
 
-     const id = nanoid(16);
-
-     const createdAt = new Date().toISOString();
-     const updatedAt = createdAt;
-
-     const newNote = {
-          title, tags, body, id, createdAt, updatedAt
-     };
-
-     notes.push(newNote);
-
-     const isSuccess = notes.filter((note) => note.id === id).length > 0;
-
-     if(isSuccess) {
-          const response = h.response(JSON.stringify(
-               {
-                    status: 'success',
-                    message: 'Catatan berhasil ditambahkan',
-                    data: {
-                         noteId: id,
-                    },
-               }
-          ));
-
-          response.code(200);
-          response.header('Access-Control-Allow-Origin', 'http://notesapp-v1.dicodingacademy.com');
-          return response;
-     }
+notes.push(newNote);
+const isSuccess = notes.filter((note) => note.id === id).length > 0;
+if(isSuccess) {
+         const response = h.response(JSON.stringify(
+              {
+                   status: 'success',
+                   message: 'Catatan berhasil ditambahkan',
+                   data: {
+                        noteId: id,
+                   },
+              }
+         ));
+         response.code(201);
+         response.header('Content-Type', 'application/json');
+         response.header('Access-Control-Allow-Origin', 'http://notesapp-v1.dicodingacademy.com');
+         return response;
+    }
 
      const response = h.response(JSON.stringify({
           status: 'fail',
@@ -43,12 +38,19 @@ const addNoteHandler = (request, h) => {
      return response;
 };
 
-const getAllNotesHandler = () => (JSON.stringify({
-  status: 'success',
-  data: {
-    notes,
-  }
-}));
+const getAllNotesHandler = (request, h) => {
+  const response = h.response(JSON.stringify({
+    status: 'success',
+    data: {
+      notes,
+    }
+  }));
+
+  response.code(200);
+  response.header('Content-Type', 'application/json');
+
+  return response;
+};
 
 const getNoteByIdHandler = (request, h) => {
   const { id } = request.params;

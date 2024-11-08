@@ -8,7 +8,7 @@ const routes = [
       return h.response(JSON.stringify({
         status: request.status,
         message: 'success'
-      })).code(200);
+      })).code(201).header('Content-Type', 'application/json');
     }
   },
   {
